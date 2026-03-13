@@ -70,47 +70,59 @@ export default function Home() {
   };
 
   return (
-    <div className="flex flex-col min-h-screen justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full flex-row items-center justify-between bg-white dark:bg-black sm:items-start">
-        <div className="w-1/3">
+    <div className="flex flex-col h-screen justify-center bg-zinc-50 font-sans dark:bg-black">
+      <main className="flex h-full   w-full flex-col lg:flex-row bg-white dark:bg-black">
+        {/* PANEL IZQUIERDO */}
+        <div className="w-full lg:w-1/3 border-b lg:border-b-0 lg:border-r border-zinc-200 dark:border-zinc-800 p-4">
+
           {reproduccion ? (
             !cancionCargando ? (
-              <div className="m-5">
+              <div className="m-2 h-full lg:m-5">
                 <Reproduccion cancion={reproduccion} audio={audio} />
               </div>
             ) : (
-              <Image
-                src={"/img/cargando.png"}
-                width={100}
-                height={100}
-                alt="cargando"
-                className="invert"
-              />
+              <div className="flex justify-center items-center p-6">
+                <Image
+                  src={"/img/cargando.png"}
+                  width={80}
+                  height={80}
+                  alt="cargando"
+                  className="invert"
+                />
+              </div>
             )
           ) : (
             ""
           )}
-          <div>
-            <h1>SoundAzureCloud</h1>
-          </div>
         </div>
-        <div className={`w-2/3 ${cancionCargando ? "pointer-events-none bg-white/10" : ""}`}>
-          <div>
+
+        {/* PANEL DERECHO */}
+        <div
+          className={`w-full lg:w-2/3 flex flex-col ${
+            cancionCargando ? "pointer-events-none bg-white/10" : ""
+          }`}
+        >
+          {/* BUSQUEDA */}
+          <div className="p-4 border-b border-zinc-200 dark:border-zinc-800">
             <Busqueda
               setCanciones={setCanciones}
               setCargando={setCargando}
               cargarDatos={cargarDatos}
-            ></Busqueda>
+            />
           </div>
-          <div className="h-screen w-full overflow-auto">
+
+          {/* LISTA DE CANCIONES */}
+          <div className="flex-1 h-full overflow-y-scroll p-4 space-y-2">
             {cargando ? (
-              <Image
-                src={"/img/cargando.png"}
-                width={100}
-                height={100}
-                alt="cargando"
-                className="invert  bg-white/20"
-              />
+              <div className="flex justify-center items-center h-40">
+                <Image
+                  src={"/img/cargando.png"}
+                  width={80}
+                  height={80}
+                  alt="cargando"
+                  className="invert bg-white/20 rounded-xl p-2"
+                />
+              </div>
             ) : (
               canciones.map((cancion, index) => (
                 <CancionCard
